@@ -4,18 +4,20 @@ metadata:
   name: podinfo-staging
   namespace: argocd
   annotations:
-    argo.octopus.com/project: octopus-ai-escape-room
-    argo.octopus.com/environment: staging
+    argo.octopus.com/project.values: octopus-ai-escape-room
+    argo.octopus.com/environment.values: staging
 spec:
   project: default
   sources:
-    - repoURL: https://stefanprodan.github.io/podinfo
+    - name: chart
+      repoURL: https://stefanprodan.github.io/podinfo
       chart: podinfo
       targetRevision: "6.14.0"
       helm:
         valueFiles:
           - $values/helm/podinfo/values-staging.yaml
-    - repoURL: https://github.com/reggie-k/octopus-ai-escape-room.git
+    - name: values
+      repoURL: https://github.com/reggie-k/octopus-ai-escape-room.git
       targetRevision: main
       ref: values
   destination:

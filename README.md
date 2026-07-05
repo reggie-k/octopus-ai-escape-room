@@ -98,7 +98,26 @@ Create a project with slug: **`octopus-ai-escape-room`**
 | Staging      | `staging`      |
 | Production   | `production`   |
 
-Environment slugs must match the `argo.octopus.com/environment` annotations on the Argo CD Applications.
+Environment slugs must match the `argo.octopus.com/environment.<source-name>` annotations on the Argo CD Applications.
+
+Multi-source applications (Helm chart + Git values ref) require **named sources** and **source-scoped** annotations on the Git source Octopus updates:
+
+```yaml
+metadata:
+  annotations:
+    argo.octopus.com/project.values: octopus-ai-escape-room
+    argo.octopus.com/environment.values: development
+spec:
+  sources:
+    - name: chart
+      repoURL: https://stefanprodan.github.io/podinfo
+      chart: podinfo
+      # ...
+    - name: values
+      repoURL: https://github.com/reggie-k/octopus-ai-escape-room.git
+      ref: values
+      # ...
+```
 
 ### Project variables
 
