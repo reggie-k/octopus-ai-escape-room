@@ -107,6 +107,7 @@ metadata:
   annotations:
     argo.octopus.com/project.values: octopus-ai-escape-room
     argo.octopus.com/environment.values: development
+    argo.octopus.com/path.values: helm/podinfo
 spec:
   sources:
     - name: chart
