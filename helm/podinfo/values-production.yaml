@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/stefanprodan/podinfo
+  tag: "6.14.0"
+  pullPolicy: IfNotPresent
+
+logLevel: info
+
+# Room 1 starting state: readiness probe never passes.
+# Fix: set Podinfo.Faults.Unready=false in Octopus and redeploy to Production.
+faults:
+  delay: false
+  error: false
+  unhealthy: false
+  unready: true
+
+service:
+  enabled: true
+  type: ClusterIP
+  httpPort: 9898
+
+resources:
+  requests:
+    cpu: 1m
+    memory: 16Mi

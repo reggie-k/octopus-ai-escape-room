@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podinfo-dev
+  namespace: argocd
+  annotations:
+    argo.octopus.com/project: octopus-ai-escape-room
+    argo.octopus.com/environment: development
+spec:
+  project: default
+  sources:
+    - repoURL: https://stefanprodan.github.io/podinfo
+      chart: podinfo
+      targetRevision: "6.14.0"
+      helm:
+        valueFiles:
+          - $values/helm/podinfo/values-development.yaml
+    - repoURL: https://github.com/reggie-k/octopus-ai-escape-room.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: podinfo-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

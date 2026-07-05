@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/stefanprodan/podinfo
+  tag: "#{Podinfo.ImageTag}"
+  pullPolicy: IfNotPresent
+
+logLevel: info
+
+faults:
+  delay: false
+  error: false
+  unhealthy: false
+  unready: #{Podinfo.Faults.Unready}
+
+service:
+  enabled: true
+  type: ClusterIP
+  httpPort: 9898
+
+resources:
+  requests:
+    cpu: 1m
+    memory: 16Mi
