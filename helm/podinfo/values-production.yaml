@@ -12,8 +12,8 @@ logLevel: info
 faults:
   delay: false
   error: false
-  unhealthy: false
-  unready: true
+  unhealthy: true
+  unready: false
 
 service:
   enabled: true
