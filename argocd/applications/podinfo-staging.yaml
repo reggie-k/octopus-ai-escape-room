@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: podinfo-test
+  name: podinfo-staging
   namespace: argocd
   annotations:
     argo.octopus.com/project: octopus-ai-escape-room
-    argo.octopus.com/environment: test
+    argo.octopus.com/environment: staging
 spec:
   project: default
   sources:
@@ -14,13 +14,13 @@ spec:
       targetRevision: "6.14.0"
       helm:
         valueFiles:
-          - $values/helm/podinfo/values-test.yaml
+          - $values/helm/podinfo/values-staging.yaml
     - repoURL: https://github.com/reggie-k/octopus-ai-escape-room.git
       targetRevision: main
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: podinfo-test
+    namespace: podinfo-staging
   syncPolicy:
     automated:
       prune: true

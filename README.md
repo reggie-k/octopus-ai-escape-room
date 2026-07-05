@@ -53,7 +53,7 @@ kubectl apply -f argocd/applications/
 kubectl -n argocd port-forward svc/argocd-server 8080:443
 ```
 
-Open https://localhost:8080 and confirm `podinfo-dev`, `podinfo-test`, and `podinfo-production` are **Synced** and **Healthy**.
+Open https://localhost:8080 and confirm `podinfo-dev`, `podinfo-staging`, and `podinfo-production` are **Synced** and **Healthy**.
 
 ### 4. Access podinfo (dev)
 
@@ -72,7 +72,7 @@ argocd/
 helm/
   podinfo/
     values-development.yaml   # Working config (Development)
-    values-test.yaml          # Working config (Test)
+    values-staging.yaml       # Working config (Staging)
     values-production.yaml    # Room 1 starting state (broken)
 octopus/
   templates/                  # Templates for Octopus Update Manifests step
@@ -95,15 +95,15 @@ Create a project with slug: **`octopus-ai-escape-room`**
 | Environment  | Slug           |
 |--------------|----------------|
 | Development  | `development`  |
-| Test         | `test`         |
+| Staging      | `staging`      |
 | Production   | `production`   |
 
 Environment slugs must match the `argo.octopus.com/environment` annotations on the Argo CD Applications.
 
 ### Project variables
 
-| Variable | Development | Test | Production |
-|----------|-------------|------|------------|
+| Variable | Development | Staging | Production |
+|----------|-------------|---------|------------|
 | `Podinfo.Faults.Unready` | `false` | `false` | `true` |
 | `Podinfo.ImageTag` | `6.14.0` | `6.14.0` | `6.14.0` |
 
@@ -119,7 +119,7 @@ Environment slugs must match the `argo.octopus.com/environment` annotations on t
 
 ### Lifecycle
 
-`Development → Test → Production` with a **manual intervention** before Production (Room 2).
+`Development → Staging → Production` with a **manual intervention** before Production (Room 2).
 
 ## Escape rooms
 

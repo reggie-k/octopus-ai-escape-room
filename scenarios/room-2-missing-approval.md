@@ -8,7 +8,7 @@ Promote a release to Production when a manual intervention blocks the deployment
 
 - Lifecycle requires **manual approval** before Production
 - Room 1 is fixed (`Podinfo.Faults.Unready: false` in Production)
-- A release has been deployed to Development and Test successfully
+- A release has been deployed to Development and Staging successfully
 
 ## Symptoms
 

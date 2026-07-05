@@ -8,7 +8,7 @@ Fix the Production podinfo deployment so Argo CD reports **Healthy** and `/ready
 
 - `helm/podinfo/values-production.yaml` has `faults.unready: true`
 - Argo CD Application `podinfo-production` is **Degraded** or pods are not Ready
-- Development and Test environments are healthy (for comparison)
+- Development and Staging environments are healthy (for comparison)
 
 ## Symptoms
 
