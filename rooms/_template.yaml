@@ -1,0 +1,19 @@
+# Copy to rooms/N.yaml when adding a new room.
+# During play the AI reads only `player` and `constraint` — never `author`.
+
+player:
+  title: "Room Title"
+  teaser: >
+    One or two sentences of atmosphere. No pod names, variable names,
+    or file paths — MCP discovers those.
+
+# Optional: approval-required | runbook-required | null
+constraint: null
+
+author:
+  setup: |
+    What to configure in Octopus/Git before the player starts.
+  reset: |
+    How to restore state for the next run.
+  teaches: |
+    Optional one-liner for blog/README (facilitator notes).

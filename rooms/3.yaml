@@ -1,0 +1,17 @@
+player:
+  title: "The Runbook Rescue"
+  teaser: >
+    Production is unhealthy again. This time the recovery path may not
+    be a quick edit in the project UI.
+
+constraint: runbook-required
+
+author:
+  setup: |
+    Break Production again (e.g. Podinfo.Faults.Unready true for Production, redeploy).
+    Create an Octopus runbook "Fix Production Podinfo" that updates the variable
+    and triggers a Production deploy or manifest update.
+  reset: |
+    Break Production again via variable or a separate reset runbook.
+  teaches: |
+    Runbooks as operational automation; recovery with GitOps.

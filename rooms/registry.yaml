@@ -1,0 +1,11 @@
+# Room index for README and blog. Player-facing titles only.
+rooms:
+  - id: 1
+    file: rooms/1.yaml
+    title: "The Wrong Config"
+  - id: 2
+    file: rooms/2.yaml
+    title: "The Missing Approval"
+  - id: 3
+    file: rooms/3.yaml
+    title: "The Runbook Rescue"

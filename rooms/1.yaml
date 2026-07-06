@@ -1,0 +1,16 @@
+player:
+  title: "The Wrong Config"
+  teaser: >
+    Production took the release and Octopus looks green, but something
+    in the cluster is not healthy. Development and Staging are fine.
+
+constraint: null
+
+author:
+  setup: |
+    Set Podinfo.Faults.Unready to true for Production (false for Dev/Staging).
+    Create a release and deploy to Production.
+  reset: |
+    Set Podinfo.Faults.Unready back to true for Production and redeploy.
+  teaches: |
+    Environment-scoped variables; Git as source of truth; readiness vs deploy failure.

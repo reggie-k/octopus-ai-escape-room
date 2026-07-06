@@ -73,15 +73,18 @@ helm/
   podinfo/
     values-development.yaml   # Working config (Development)
     values-staging.yaml       # Working config (Staging)
-    values-production.yaml    # Room 1 starting state (broken)
+    values-production.yaml    # Production values (Octopus-managed)
 octopus/
   templates/                  # Templates for Octopus Update Manifests step
 prompts/
-  game-master.md              # AI game master prompt (for Cursor)
-scenarios/
-  room-1-wrong-config.md
-  room-2-missing-approval.md
-  room-3-runbook-rescue.md
+  game-master.md              # AI behavior (hints, MCP, no spoilers)
+rooms/
+  _template.yaml              # Copy to add a new room
+  1.yaml … 3.yaml             # player teaser + author setup per room
+  registry.yaml               # Room index for README/blog
+docs/
+  playing.md                  # How to play
+  extending.md                # How to add rooms
 ```
 
 ## Octopus setup
@@ -130,10 +133,13 @@ spec:
 ### Deployment process
 
 1. **Update Argo CD Application Manifests**
-   - Source template from `octopus/templates/values-#{Octopus.Environment.Name | ToLower}.yaml`
-   - Target Git path: `helm/podinfo/values-#{Octopus.Environment.Name | ToLower}.yaml`
+   - Source template from `octopus/templates/values-#{Octopus.Environment.Slug}.yaml`
+   - Git credential for `https://github.com/reggie-k/octopus-ai-escape-room.git`
    - Verification: **Argo CD Application is healthy**
    - Trigger Sync: enabled
+
+   > **Note:** Do not use `| ToLower` in the template path — the pipe is treated as a
+   > path separator and produces an empty Git package. Use `#{Octopus.Environment.Slug}` instead.
 
 2. **Wait For Argo CD Applications** (optional extra step)
 
@@ -143,20 +149,25 @@ spec:
 
 ## Escape rooms
 
-| Room | Scenario | Fix |
-|------|----------|-----|
-| 1 | Wrong config in Production (`faults.unready: true`) | Set `Podinfo.Faults.Unready` to `false`, redeploy |
-| 2 | Production promotion blocked | Approve manual intervention, redeploy |
-| 3 | Broken config needs runbook | Runbook updates variable and triggers redeploy |
+| Room | Title | Facilitator setup |
+|------|-------|-------------------|
+| 1 | The Wrong Config | [rooms/1.yaml](rooms/1.yaml) (`author.setup`) |
+| 2 | The Missing Approval | [rooms/2.yaml](rooms/2.yaml) |
+| 3 | The Runbook Rescue | [rooms/3.yaml](rooms/3.yaml) |
 
-See [scenarios/](scenarios/) for details.
+Player-facing text is in each file's `player` section (title + teaser only).
+The AI discovers apps, variables, and paths via **Octopus MCP** — no spoilers in repo.
+
+Add Room 4+: copy [rooms/_template.yaml](rooms/_template.yaml) — see [docs/extending.md](docs/extending.md).
 
 ## Playing the game
 
-1. Connect Cursor to **Octopus MCP**
-2. Paste the prompt from [prompts/game-master.md](prompts/game-master.md)
-3. Add the active room scenario from [scenarios/](scenarios/)
-4. Deploy / promote in Octopus and fix issues with AI hints
+1. Connect Cursor to **Octopus MCP** (project open in this repo — [`.cursor/rules/escape-room.mdc`](.cursor/rules/escape-room.mdc) loads automatically)
+2. Apply facilitator setup from `rooms/N.yaml` → `author.setup`
+3. Say **"Room N is active"** or **"this release is stuck"**
+4. Fix with AI hints; validate via Octopus → Git → Argo CD
+
+Details: [docs/playing.md](docs/playing.md)
 
 ## License
 

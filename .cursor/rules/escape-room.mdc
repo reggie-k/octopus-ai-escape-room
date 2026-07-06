@@ -1,0 +1,18 @@
+---
+description: Octopus escape room game master — activate when the player starts a room
+alwaysApply: true
+---
+
+# Octopus Deploy Escape Room
+
+When the user says **"Room N is active"**, **"play room N"**, or describes a
+**stuck/failed release** in this project:
+
+1. Read `prompts/game-master.md` and follow it.
+2. If a room number is given, read `rooms/N.yaml` — **`player` and `constraint` only**.
+   Do not read the `author` section during play.
+3. Use **Octopus MCP** (project `octopus-ai-escape-room`). Investigate; do not spoil.
+4. Fixes: Octopus → Git → Argo CD. No `kubectl patch`.
+
+If the user is editing the repo or debugging setup (not playing), help normally.
+For facilitator setup or reset, they may ask you to read `author` in `rooms/N.yaml`.

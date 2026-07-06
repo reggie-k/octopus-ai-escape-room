@@ -1,0 +1,17 @@
+player:
+  title: "The Missing Approval"
+  teaser: >
+    You are ready for Production, but the promotion will not complete.
+    This may not be an application health problem at all.
+
+constraint: approval-required
+
+author:
+  setup: |
+    Ensure Room 1 is fixed (Production healthy).
+    Lifecycle must require manual intervention before Production.
+    Create a release, deploy Dev and Staging, then attempt Production.
+  reset: |
+    Create a new release and attempt Production promotion again.
+  teaches: |
+    Lifecycles, manual interventions, blocked deploy vs broken app.
