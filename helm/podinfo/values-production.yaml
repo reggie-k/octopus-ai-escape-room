@@ -7,13 +7,11 @@ image:
 
 logLevel: info
 
-# Room 1 starting state: readiness probe never passes.
-# Fix: set Podinfo.Faults.Unready=false in Octopus and redeploy to Production.
 faults:
   delay: false
   error: false
-  unhealthy: true
-  unready: false
+  unhealthy: false
+  unready: true
 
 service:
   enabled: true
